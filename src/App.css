@@ -96,6 +96,10 @@ button {
   grid-template-columns: minmax(280px, 390px);
   justify-content: center;
 }
+.activity-grid.two-cards {
+  grid-template-columns: repeat(2, minmax(280px, 390px));
+  justify-content: center;
+}
 .activity-tile {
   min-height: 242px;
   padding: 24px;
@@ -243,6 +247,46 @@ button {
 .result.error {
   background: #fff0f0;
   color: #c73737;
+}
+.grade-result {
+  margin-top: 24px;
+  padding: 20px;
+  display: grid;
+  gap: 4px;
+  border: 1px solid;
+  border-radius: 12px;
+}
+.grade-result span {
+  margin-top: 4px;
+  font-size: 13px;
+}
+.grade-result strong {
+  margin-bottom: 5px;
+  font-size: 14px;
+}
+.grade-result b {
+  font-size: 24px;
+}
+.grade-result.failed {
+  border-color: #ff7474;
+  background: #fff1f1;
+  color: #c60000;
+}
+.grade-result.passed {
+  border-color: #f7b817;
+  background: #fffbee;
+  color: #bd4b00;
+}
+.grade-result.good {
+  border-color: #70afff;
+  background: #eff6ff;
+  color: #1649e8;
+}
+.grade-result.very-good,
+.grade-result.excellent {
+  border-color: #4be09a;
+  background: #effdf6;
+  color: #00824e;
 }
 .login-success {
   text-align: center;

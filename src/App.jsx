@@ -23,6 +23,12 @@ function Header({ page, setPage }) {
           >
             Activity 1
           </button>
+          <button
+            className={page === 'password' ? 'active' : ''}
+            onClick={() => setPage('password')}
+          >
+            Activity 3
+          </button>
         </div>
       </nav>
     </header>
@@ -35,12 +41,12 @@ function Home({ setPage }) {
       <section className="intro">
         <h1>React Activity Portal</h1>
         <p>
-          An interactive React activity demonstrating state, events,
+          Two interactive React activities demonstrating state, events,
           conditional logic, and validation.
         </p>
       </section>
 
-      <section className="activity-grid single-card">
+      <section className="activity-grid two-cards">
         <article className="activity-tile">
           <b className="number">1</b>
           <h2>Login Authentication</h2>
@@ -51,6 +57,21 @@ function Home({ setPage }) {
           <button
             className="primary tile-button"
             onClick={() => setPage('login')}
+          >
+            Open Activity
+          </button>
+        </article>
+
+        <article className="activity-tile">
+          <b className="number">3</b>
+          <h2>Password Strength Checker</h2>
+          <p>
+            Check password length and receive live feedback on how strong it
+            is.
+          </p>
+          <button
+            className="primary tile-button"
+            onClick={() => setPage('password')}
           >
             Open Activity
           </button>
@@ -143,13 +164,92 @@ function LoginActivity() {
   )
 }
 
+function PasswordActivity() {
+  const [password, setPassword] = useState('')
+  const [result, setResult] = useState(null)
+
+  function handleCheck() {
+    if (!password) {
+      setResult({ error: 'Please enter a password.' })
+      return
+    }
+
+    if (password.length >= 10) {
+      setResult({
+        status: 'Strong',
+        message: 'You can use this password.',
+      })
+    } else if (password.length >= 6) {
+      setResult({
+        status: 'Medium',
+        message: 'Consider creating a longer password.',
+      })
+    } else {
+      setResult({
+        status: 'Weak',
+        message: 'Please create a stronger password.',
+      })
+    }
+  }
+
+  function handleClear() {
+    setPassword('')
+    setResult(null)
+  }
+
+  return (
+    <main className="activity-page">
+      <section className="form-card">
+        <header className="card-head">
+          <h1>Password Strength Checker</h1>
+          <p>Activity 3</p>
+        </header>
+
+        <div className="card-body">
+          <label className="field">
+            <span>Password</span>
+            <input
+              type="password"
+              placeholder="Enter password"
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
+            />
+          </label>
+
+          <p className="counter">Character count: {password.length}</p>
+
+          <div className="button-row">
+            <button className="primary" onClick={handleCheck}>
+              Check Password
+            </button>
+            <button className="secondary" onClick={handleClear}>
+              Clear
+            </button>
+          </div>
+
+          {result?.error && <p className="result error">{result.error}</p>}
+
+          {result?.status && (
+            <div className={`password-result ${result.status.toLowerCase()}`}>
+              <strong>Password Status: {result.status}</strong>
+              <p>{result.message}</p>
+            </div>
+          )}
+        </div>
+      </section>
+    </main>
+  )
+}
+
 export default function App() {
   const [page, setPage] = useState('home')
 
   return (
     <div className="app">
       <Header page={page} setPage={setPage} />
-      {page === 'home' ? <Home setPage={setPage} /> : <LoginActivity />}
+      {page === 'home' && <Home setPage={setPage} />}
+      {page === 'login' && <LoginActivity />}
+      {page === 'password' && <PasswordActivity />}
     </div>
   )
 }

@@ -135,10 +135,6 @@ function LoginActivity() {
               </button>
 
               {message && <p className="result error">{message}</p>}
-
-              <p className="hint">
-                Sample credentials — Username: admin, Password: 12345
-              </p>
             </>
           )}
         </div>
